@@ -1,7 +1,12 @@
 <template>
   <div class="container">
-    <b-card-group deck>
-      <div v-for="product in products" :key="product.id">
+    <carousel
+      v-bind="options"
+      :navigation-enabled="true"
+      :navigation-next-label="nextLabel"
+      :navigation-prev-label="prevLabel"
+    >
+      <slide v-for="product in products" :key="product.id">
         <nuxt-link :to="`/products/${product.id}`" style="text-decoration: none">
           <b-card
             :title="product.title"
@@ -22,8 +27,8 @@
             </b-button>
           </b-card>
         </nuxt-link>
-      </div>
-    </b-card-group>
+      </slide>
+    </carousel>
   </div>
 </template>
 <script>
@@ -31,7 +36,12 @@ import axios from 'axios'
 export default {
   data () {
     return {
-      products: []
+      products: [],
+      options: {
+        loop: true,
+        perPage: 3,
+        paginationEnabled: false
+      }
     }
   },
   async created () {
